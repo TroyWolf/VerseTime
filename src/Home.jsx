@@ -10,18 +10,18 @@ export default function App() {
       const res = await fetch(`${API_URL}/${book}/${chapter}/${verse}`, {
         ...fetchCfg(),
       })
-      console.log(res)
       if (res.status > 403) {
         return console.error(res)
       }
       const data = await res.json()
-      if (data.error) {
-        return console.log(data.error)
+      if (data.error || !data.scripture) {
+        setTimeWithoutVerse()
+        return console.log(data)
       }
-      console.log(data)
       setVerse(data)
     } catch (error) {
       console.error(error)
+      setTimeWithoutVerse()
     }
   }
 
@@ -33,12 +33,26 @@ export default function App() {
     return verses?.[Math.floor(Math.random() * verses.length)]
   }
 
-  const doMinute = (hour, minute) => {
-    const verse = getVerse(hour, minute)
-    fetchVerse({
-      ...verse,
+  const setTimeWithoutVerse = (hour, minute) => {
+    setVerse({
+      book: "",
+      chapter: hour,
+      minute,
       verse: minute,
+      scripture: "",
     })
+  }
+
+  const doMinute = (hour, minute) => {
+    if (minute === 0) {
+      setTimeWithoutVerse()
+    } else {
+      const verse = getVerse(hour, minute)
+      fetchVerse({
+        ...verse,
+        verse: minute,
+      })
+    }
   }
 
   const update = () => {
@@ -58,12 +72,14 @@ export default function App() {
 
   return (
     <>
-      <div className="text-5xl italic text-left pb-10">
+      <div className="text-3xl lg:text-5xl font-thin text-left pb-4 lg:pb-10">
         {verse.scripture}
       </div>
-      <h1 className="text-9xl">
-        {verse.book} {verse.chapter}:
-        {verse.verse.toString().padStart(2, "0")}
+      <h1 className="text-2xl lg:text-4xl font-thin text-right">
+        {verse.book}{" "}
+        <span className="font-semibold text-4xl lg:text-7xl pr-6 lg:pr-12 ml-2">
+          {verse.chapter}:{verse.verse.toString().padStart(2, "0")}
+        </span>
       </h1>
     </>
   )
