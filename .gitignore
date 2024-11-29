@@ -1,0 +1,9 @@
+node_modules
+dist
+.env
+*.log
+*.local
+IagPerformance*
+test.html
+/ca-certificates
+_dev_*

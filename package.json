@@ -1,0 +1,35 @@
+{
+  "name": "versetime-api",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "A Bible API",
+  "author": "troy@troywolf.com",
+  "private": true,
+  "license": "UNLICENSED",
+  "main": "index.js",
+  "scripts": {
+    "start": "clear; nodemon --exec babel-node index.js",
+    "build": "babel ./src src --copy-files -d dist",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "app-root-path": "^3.1.0",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "express-rate-limit": "^7.4.1",
+    "morgan": "^1.10.0",
+    "pg": "^8.13.1",
+    "tinypg-parser": "^1.0.6"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.0",
+    "@babel/node": "^7.8.7",
+    "@babel/polyfill": "^7.8.7",
+    "@babel/preset-env": "^7.9.0",
+    "babel-loader": "^8.1.0",
+    "nodemon": "^2.0.2"
+  }
+}
