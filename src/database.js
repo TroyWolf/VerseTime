@@ -16,7 +16,7 @@ const doQuery = async (query, params) => {
   const pgQuery = sqlParse(sql, params)
   try {
     const res = await db.query(pgQuery.sql, pgQuery.params)
-    console.log('doQuery', query, params, res)
+    // console.log('doQuery', query, params, res)
     return res
   } catch (err) {
     if (err.code) {
