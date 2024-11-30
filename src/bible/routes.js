@@ -28,4 +28,13 @@ export default (app) => {
     res.json(data)
   })
 
+  app.get("/full/:chapter/:verse", async (req, res, next) => {
+    const { book, chapter, verse } = req.params
+    const data = await bibleSvc.getTimeVerseFull({ book, chapter, verse })
+    if (data.code) {
+      res.status(data.code)
+    }
+    res.json(data)
+  })
+
 }
