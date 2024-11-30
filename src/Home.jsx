@@ -2,6 +2,8 @@ import * as React from "react"
 import bibleData from "./data"
 import { API_URL, fetchCfg } from "./config"
 
+let verseTimeMinute
+
 export default function App() {
   const [verse, setVerse] = React.useState()
 
@@ -38,7 +40,6 @@ export default function App() {
     setVerse({
       book: "",
       chapter: hour,
-      minute,
       verse: `${minute}`,
       scripture: "",
     })
@@ -67,12 +68,17 @@ export default function App() {
     return { hour, minute }
   }
 
-  const update = () => {
-    window.setTimeout(update, 60000)
-    doMinute()
+  const checkTime = () => {
+    const { minute } = getTime()
+    if (minute !== verseTimeMinute) {
+      verseTimeMinute = minute
+      doMinute()
+    }
+    // Check every 5 seconds to see if the clock minute has changed
+    window.setTimeout(checkTime, 5000)
   }
 
-  React.useEffect(update, [])
+  React.useEffect(checkTime, [])
 
   if (!verse) return null
 
