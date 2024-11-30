@@ -71,7 +71,7 @@ button.btn:focus-visible {
     color: #747bff;
   }
 
-  button {
+  button.btn {
     background-color: #f9f9f9;
   }
 }

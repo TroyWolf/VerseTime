@@ -110,7 +110,11 @@ export default function App() {
         {verse.scripture}
       </div>
       <h1 className="text-2xl lg:text-4xl font-thin text-right">
-        <button type="button" onClick={openBibleHub} className="mr-4">
+        <button
+          type="button"
+          onClick={openBibleHub}
+          className="mr-4 mb-2 align-middle"
+        >
           <img
             src={ExternalSvg}
             className="w-8"
@@ -119,7 +123,7 @@ export default function App() {
         </button>
         {verse.book}{" "}
         <button type="button" onClick={() => window.location.reload()}>
-          <span className="font-semibold text-4xl lg:text-7xl pr-6 lg:pr-12 ml-2">
+          <span className="font-semibold text-4xl lg:text-7xl pr-6 md:pr-10 ml-2">
             {verse.chapter}:{verse.verse.toString().padStart(2, "0")}
           </span>
         </button>
