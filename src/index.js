@@ -6,7 +6,7 @@ import cookieParser from 'cookie-parser'
 import cors from 'cors'
 import logger from 'morgan'
 import rateLimit from 'express-rate-limit'
-import routes from './src/routes.js'
+import routes from './routes.js'
 import dotenv from 'dotenv'
 
 if (process.env.NODE_ENV !== 'production') {
