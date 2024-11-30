@@ -5,7 +5,7 @@ services:
     container_name: versetime-api
     image: node:20-alpine
     ports:
-      - "5001:5001"
+      - "3000:3000"
     working_dir: /app
     volumes:
       - .:/app:cached

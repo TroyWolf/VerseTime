@@ -1,5 +1,5 @@
 api.versetime.local {
-  reverse_proxy versetime-api:5001 
+  reverse_proxy versetime-api:3000 
 	
 	tls internal {
 		on_demand
