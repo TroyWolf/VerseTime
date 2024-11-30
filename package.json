@@ -11,7 +11,7 @@
     "start": "npm run build && node ./build/index.js",
     "start:dev": "nodemon --exec babel-node ./src/index.js",
     "clean": "rm -rf build && mkdir build",
-    "build-babel": "babel -d ./build ./src/index.js -s",
+    "build-babel": "babel ./src src --copy-files -d ./build ./src/index.js -s",
     "build": "npm run clean && npm run build-babel"    
   },
   "dependencies": {
