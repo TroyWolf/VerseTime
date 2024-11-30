@@ -14,6 +14,12 @@ if (process.env.NODE_ENV !== 'production') {
 
 const app = express()
 
+/**
+ * I don't really know what this is, but it supposedly addresses this error:
+ *   ValidationError: The 'X-Forwarded-For' header is set but the Express 'trust proxy' setting is false
+ */
+app.enable('trust proxy')
+
 const server = http.createServer({}, app)
 
 app.use(bodyParser.json())
