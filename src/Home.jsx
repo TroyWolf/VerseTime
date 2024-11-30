@@ -48,7 +48,7 @@ export default function App() {
   }
 
   const update = () => {
-    console.log('update')
+    console.log("update")
     const { hour, minute, seconds } = getTime()
 
     if (minute === verse?.verse) {
@@ -91,9 +91,11 @@ export default function App() {
       </div>
       <h1 className="text-2xl lg:text-4xl font-thin text-right">
         {verse.book}{" "}
-        <span className="font-semibold text-4xl lg:text-7xl pr-6 lg:pr-12 ml-2">
-          {verse.chapter}:{verse.verse.toString().padStart(2, "0")}
-        </span>
+        <button type="button" onClick={() => window.location.reload()}>
+          <span className="font-semibold text-4xl lg:text-7xl pr-6 lg:pr-12 ml-2">
+            {verse.chapter}:{verse.verse.toString().padStart(2, "0")}
+          </span>
+        </button>
       </h1>
     </>
   )
