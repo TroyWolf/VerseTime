@@ -82,11 +82,23 @@ export default function App() {
       document.removeEventListener("visibilitychange", handleVisibilityChange)
   })
 
+  /*
   const openBibleGateway = () => {
     if (!verse?.book || !verse?.chapter) {
       return
     }
     const url = `https://www.biblegateway.com/passage/?search=${verse.book}%20${verse.chapter}&version=ESV`
+    window.open(url, "_blank")
+  }
+  */
+
+  const openBibleHub = () => {
+    if (!verse?.book || !verse?.chapter) {
+      return
+    }
+    const url = `https://biblehub.com/bsb/${verse.book
+      .toLowerCase()
+      .replace(" ", "_")}/${verse.chapter}.htm`
     window.open(url, "_blank")
   }
 
@@ -98,7 +110,7 @@ export default function App() {
         {verse.scripture}
       </div>
       <h1 className="text-2xl lg:text-4xl font-thin text-right">
-        <button type="button" onClick={openBibleGateway} className="mr-4">
+        <button type="button" onClick={openBibleHub} className="mr-4">
           <img
             src={ExternalSvg}
             className="w-8"
