@@ -14,22 +14,26 @@ const getTime = () => {
 }
 
 export default function App() {
-  const [verse, setVerse] = React.useState()
+  const [verses, setVerses] = React.useState([])
+  const [currentMinute, setCurrentMinute] = React.useState()
 
-  const fetchVerse = async ({ chapter, verse }) => {
+  const fetchVerseFull = async ({ chapter, verse }) => {
+    setCurrentMinute(verse)
     try {
-      const res = await fetch(`${API_URL}/time/${chapter}/${verse}`, {
+      const res = await fetch(`${API_URL}/full/${chapter}/${verse}`, {
         ...fetchCfg(),
       })
-      if (res.status > 403) {
-        return console.error(res)
+      if (res.status > 200) {
+        setTimeWithoutVerse()
+        console.log("TROY")
+        return
       }
       const data = await res.json()
-      if (data.error || !data.scripture) {
+      if (data.error || !data.length) {
         setTimeWithoutVerse()
         return console.log(data)
       }
-      setVerse(data)
+      setVerses(data)
     } catch (error) {
       console.error(error)
       setTimeWithoutVerse()
@@ -40,18 +44,20 @@ export default function App() {
   // TODO: Maybe some C.S. Lewis or Oswald Chambers quotes?
   const setTimeWithoutVerse = () => {
     const { hour, minute } = getTime()
-    setVerse({
-      book: "",
-      chapter: hour,
-      verse: `${minute}`,
-      scripture: "",
-    })
+    setVerses([
+      {
+        book: "",
+        chapter: hour,
+        verse: `${minute}`,
+        scripture: "",
+      },
+    ])
   }
 
   const update = () => {
     const { hour, minute, seconds } = getTime()
 
-    if (minute === verse?.verse) {
+    if (minute === currentMinute) {
       return
     }
 
@@ -62,7 +68,7 @@ export default function App() {
     if (minute === 0) {
       setTimeWithoutVerse()
     } else {
-      fetchVerse({
+      fetchVerseFull({
         chapter: hour,
         verse: minute,
       })
@@ -82,18 +88,8 @@ export default function App() {
       document.removeEventListener("visibilitychange", handleVisibilityChange)
   })
 
-  /*
-  const openBibleGateway = () => {
-    if (!verse?.book || !verse?.chapter) {
-      return
-    }
-    const url = `https://www.biblegateway.com/passage/?search=${verse.book}%20${verse.chapter}&version=ESV`
-    window.open(url, "_blank")
-  }
-  */
-
   const openBibleHub = () => {
-    if (!verse?.book || !verse?.chapter) {
+    if (!verse.chapter) {
       return
     }
     const url = `https://biblehub.com/bsb/${verse.book
@@ -102,12 +98,41 @@ export default function App() {
     window.open(url, "_blank")
   }
 
-  if (!verse) return null
+  const verse = React.useMemo(
+    () => verses?.find((v) => v.verse === currentMinute) || verses[0],
+    [currentMinute, verses]
+  )
+
+  const verseLength = React.useMemo(
+    () => verses.reduce((acc, v) => acc + v.scripture.length, 0),
+    [verses]
+  )
+
+  if (!verses.length) return null
 
   return (
     <>
-      <div className="text-3xl lg:text-5xl font-thin text-left pb-4 lg:pb-10">
-        {verse.scripture}
+      <div
+        className={`${
+          verseLength > 200 ? "text-xl lg:text-3xl" : "text-3xl lg:text-5xl"
+        } font-extralight text-left pb-4 lg:pb-10`}
+      >
+        {verses.map((v) => (
+          <span key={v.verse}>
+            {verses.length > 1 && (
+              <sup className="px-2 first:pr-2">{v.verse}</sup>
+            )}
+            <span
+              className={`${
+                verses.length > 1 && v.verse !== currentMinute
+                  ? "font-thin"
+                  : ""
+              }`}
+            >
+              {v.scripture}
+            </span>
+          </span>
+        ))}
       </div>
       <h1 className="text-2xl lg:text-4xl font-thin text-right">
         <button
@@ -121,7 +146,7 @@ export default function App() {
             alt="Open chapter in new window"
           />
         </button>
-        {verse.book}{" "}
+        {verse.book}
         <button type="button" onClick={() => window.location.reload()}>
           <span className="font-semibold text-4xl lg:text-7xl pr-6 md:pr-10 ml-2">
             {verse.chapter}:{verse.verse.toString().padStart(2, "0")}
