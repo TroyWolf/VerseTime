@@ -92,7 +92,11 @@ export default function App() {
     if (!verse.chapter) {
       return
     }
-    const url = `https://biblehub.com/bsb/${verse.book
+
+    // Translate book name for BibleHub
+    const book = verse.book.includes("Songs") ? "songs" : verse.book
+
+    const url = `https://biblehub.com/bsb/${book
       .toLowerCase()
       .replace(" ", "_")}/${verse.chapter}.htm`
     window.open(url, "_blank")
