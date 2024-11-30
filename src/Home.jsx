@@ -33,17 +33,19 @@ export default function App() {
     return verses?.[Math.floor(Math.random() * verses.length)]
   }
 
-  const setTimeWithoutVerse = (hour, minute) => {
+  const setTimeWithoutVerse = () => {
+    const { hour, minute } = getTime()
     setVerse({
       book: "",
       chapter: hour,
       minute,
-      verse: minute,
+      verse: `${minute}`,
       scripture: "",
     })
   }
 
-  const doMinute = (hour, minute) => {
+  const doMinute = () => {
+    const { hour, minute } = getTime()
     if (minute === 0) {
       setTimeWithoutVerse()
     } else {
@@ -55,15 +57,19 @@ export default function App() {
     }
   }
 
-  const update = () => {
-    window.setTimeout(update, 60000)
+  const getTime = () => {
     const now = new Date()
     let hour = now.getHours()
     // const ampm = hour >= 12 ? "PM" : "AM"
     hour = hour % 12
     hour = hour ? hour : 12 // the hour '0' should be '12'
     const minute = now.getMinutes()
-    doMinute(hour, minute)
+    return { hour, minute }
+  }
+
+  const update = () => {
+    window.setTimeout(update, 60000)
+    doMinute()
   }
 
   React.useEffect(update, [])
