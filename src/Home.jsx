@@ -1,7 +1,16 @@
 import * as React from "react"
 import { API_URL, fetchCfg } from "./config"
 
-let verseTimeMinute
+const getTime = () => {
+  const now = new Date()
+  let hour = now.getHours()
+  // const ampm = hour >= 12 ? "PM" : "AM"
+  hour = hour % 12
+  hour = hour ? hour : 12 // the hour '0' should be '12'
+  const minute = now.getMinutes()
+  const seconds = now.getSeconds()
+  return { hour, minute, seconds }
+}
 
 export default function App() {
   const [verse, setVerse] = React.useState()
@@ -26,6 +35,8 @@ export default function App() {
     }
   }
 
+  // We don't have any 0 verses, so just show the time.
+  // TODO: Maybe some C.S. Lewis or Oswald Chambers quotes?
   const setTimeWithoutVerse = () => {
     const { hour, minute } = getTime()
     setVerse({
@@ -36,8 +47,13 @@ export default function App() {
     })
   }
 
-  const doMinute = () => {
-    const { hour, minute } = getTime()
+  const update = () => {
+    const { hour, minute, seconds } = getTime()
+    
+    // Check just after the next minute arrives
+    const nextCheckDelay = 60001 - seconds * 1000
+    window.setTimeout(update, nextCheckDelay)
+    
     if (minute === 0) {
       setTimeWithoutVerse()
     } else {
@@ -48,27 +64,7 @@ export default function App() {
     }
   }
 
-  const getTime = () => {
-    const now = new Date()
-    let hour = now.getHours()
-    // const ampm = hour >= 12 ? "PM" : "AM"
-    hour = hour % 12
-    hour = hour ? hour : 12 // the hour '0' should be '12'
-    const minute = now.getMinutes()
-    return { hour, minute }
-  }
-
-  const checkTime = () => {
-    const { minute } = getTime()
-    if (minute !== verseTimeMinute) {
-      verseTimeMinute = minute
-      doMinute()
-    }
-    // Check every 5 seconds to see if the clock minute has changed
-    window.setTimeout(checkTime, 5000)
-  }
-
-  React.useEffect(checkTime, [])
+  React.useEffect(update, [])
 
   if (!verse) return null
 
