@@ -1,5 +1,4 @@
 import * as React from "react"
-import bibleData from "./data"
 import { API_URL, fetchCfg } from "./config"
 
 let verseTimeMinute
@@ -7,9 +6,9 @@ let verseTimeMinute
 export default function App() {
   const [verse, setVerse] = React.useState()
 
-  const fetchVerse = async ({ book, chapter, verse }) => {
+  const fetchVerse = async ({ chapter, verse }) => {
     try {
-      const res = await fetch(`${API_URL}/${book}/${chapter}/${verse}`, {
+      const res = await fetch(`${API_URL}/time/${chapter}/${verse}`, {
         ...fetchCfg(),
       })
       if (res.status > 403) {
@@ -27,14 +26,6 @@ export default function App() {
     }
   }
 
-  // Find a random verse that can work for the hour and minute
-  const getVerse = (hour, minute) => {
-    const verses = bibleData.filter(
-      (d) => d.chapter === hour && d.verseCount >= minute
-    )
-    return verses?.[Math.floor(Math.random() * verses.length)]
-  }
-
   const setTimeWithoutVerse = () => {
     const { hour, minute } = getTime()
     setVerse({
@@ -50,9 +41,8 @@ export default function App() {
     if (minute === 0) {
       setTimeWithoutVerse()
     } else {
-      const verse = getVerse(hour, minute)
       fetchVerse({
-        ...verse,
+        chapter: hour,
         verse: minute,
       })
     }
