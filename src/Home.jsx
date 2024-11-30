@@ -48,12 +48,17 @@ export default function App() {
   }
 
   const update = () => {
+    console.log('update')
     const { hour, minute, seconds } = getTime()
-    
+
+    if (minute === verse?.verse) {
+      return
+    }
+
     // Check just after the next minute arrives
     const nextCheckDelay = 60001 - seconds * 1000
     window.setTimeout(update, nextCheckDelay)
-    
+
     if (minute === 0) {
       setTimeWithoutVerse()
     } else {
@@ -65,6 +70,17 @@ export default function App() {
   }
 
   React.useEffect(update, [])
+
+  React.useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "visible") {
+        update()
+      }
+    }
+    document.addEventListener("visibilitychange", handleVisibilityChange)
+    return () =>
+      document.removeEventListener("visibilitychange", handleVisibilityChange)
+  })
 
   if (!verse) return null
 
