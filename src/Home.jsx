@@ -1,5 +1,6 @@
 import * as React from "react"
 import { API_URL, fetchCfg } from "./config"
+import ExternalSvg from "./assets/external.svg"
 
 const getTime = () => {
   const now = new Date()
@@ -48,7 +49,6 @@ export default function App() {
   }
 
   const update = () => {
-    console.log("update")
     const { hour, minute, seconds } = getTime()
 
     if (minute === verse?.verse) {
@@ -82,6 +82,14 @@ export default function App() {
       document.removeEventListener("visibilitychange", handleVisibilityChange)
   })
 
+  const openBibleGateway = () => {
+    if (!verse?.book || !verse?.chapter) {
+      return
+    }
+    const url = `https://www.biblegateway.com/passage/?search=${verse.book}%20${verse.chapter}&version=ESV`
+    window.open(url, "_blank")
+  }
+
   if (!verse) return null
 
   return (
@@ -90,6 +98,13 @@ export default function App() {
         {verse.scripture}
       </div>
       <h1 className="text-2xl lg:text-4xl font-thin text-right">
+        <button type="button" onClick={openBibleGateway} className="mr-4">
+          <img
+            src={ExternalSvg}
+            className="w-8"
+            alt="Open chapter in new window"
+          />
+        </button>
         {verse.book}{" "}
         <button type="button" onClick={() => window.location.reload()}>
           <span className="font-semibold text-4xl lg:text-7xl pr-6 lg:pr-12 ml-2">
