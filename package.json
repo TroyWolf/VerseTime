@@ -9,6 +9,7 @@
   "main": "index.js",
   "scripts": {
     "start": "clear; nodemon --exec babel-node src/index.js",
+    "production": "NODE_ENV=production babel-node src/index.js",
     "build": "babel ./src src --copy-files -d dist",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
