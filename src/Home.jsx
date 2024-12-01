@@ -94,7 +94,7 @@ export default function App() {
     }
 
     // Translate book name for BibleHub
-    const book = verse.book.includes("Songs") ? "songs" : verse.book
+    const book = verse.book.includes("Song") ? "songs" : verse.book
 
     const url = `https://biblehub.com/bsb/${book
       .toLowerCase()
