@@ -23,10 +23,12 @@ export default function App() {
 
   const captureScreenshot = () => {
     const screenshotTarget = document.getElementById("screenshot-target")
+    /*
     const imageEls = screenshotTarget.getElementsByTagName("img")
     for (const el of imageEls) {
       el.style.display = "none"
     }
+    */
     html2canvas(screenshotTarget).then((canvas) => {
       const base64image = canvas.toDataURL("image/png")
 
@@ -35,9 +37,11 @@ export default function App() {
       link.href = base64image
       link.download = `${verse.book}-${verse.chapter}-${verse.verse}.png`
       link.click()
+      /*
       for (const el of imageEls) {
         el.style.display = "block"
       }
+      */
     })
   }
 
@@ -153,59 +157,58 @@ export default function App() {
   if (!verses.length) return null
 
   return (
-    <div id="screenshot-target" className="p-8">
-      <div className={`${fontSize} font-extralight text-left pb-4 lg:pb-10`}>
-        {verses.map((v) => (
-          <span key={v.verse}>
-            {verses.length > 1 && (
-              <sup className="px-2 first:pr-2">{v.verse}</sup>
-            )}
-            <span
-              className={`${
-                verses.length > 1 && v.verse !== currentMinute
-                  ? "font-thin"
-                  : ""
-              }`}
-            >
-              {v.scripture}
+    <>
+      {verse.scripture && (
+        <div className="text-left">
+          <button
+            type="button"
+            onClick={captureScreenshot}
+            className="mr-4 mb-2 align-middle"
+          >
+            <img src={cameraSvg} className="w-8" alt="Create a screenshot" />
+          </button>
+          <button
+            type="button"
+            onClick={openBibleHub}
+            className="mr-4 mb-2 align-middle"
+          >
+            <img
+              src={externalSvg}
+              className="w-8"
+              alt="Open chapter in new window"
+            />
+          </button>
+        </div>
+      )}
+
+      <div id="screenshot-target" className="p-4 md:p-8">
+        <div className={`${fontSize} font-extralight text-left pb-4 lg:pb-10`}>
+          {verses.map((v) => (
+            <span key={v.verse}>
+              {verses.length > 1 && (
+                <sup className="px-2 first:pr-2">{v.verse}</sup>
+              )}
+              <span
+                className={`${
+                  verses.length > 1 && v.verse !== currentMinute
+                    ? "font-thin"
+                    : ""
+                }`}
+              >
+                {v.scripture}
+              </span>
             </span>
-          </span>
-        ))}
+          ))}
+        </div>
+        <div className="text-2xl lg:text-4xl font-thin text-right">
+          {verse.book}
+          <button type="button" onClick={() => window.location.reload()}>
+            <span className="font-semibold text-4xl lg:text-7xl pr-6 md:pr-10 ml-2">
+              {verse.chapter}:{verse.verse.toString().padStart(2, "0")}
+            </span>
+          </button>
+        </div>
       </div>
-      <h1 className="text-2xl lg:text-4xl font-thin text-right">
-        {verse.scripture && (
-          <>
-            <button
-              type="button"
-              onClick={captureScreenshot}
-              className="mr-4 mb-2 align-middle"
-            >
-              <img
-                src={cameraSvg}
-                className="w-8"
-                alt="Open chapter in new window"
-              />
-            </button>
-            <button
-              type="button"
-              onClick={openBibleHub}
-              className="mr-4 mb-2 align-middle"
-            >
-              <img
-                src={externalSvg}
-                className="w-8"
-                alt="Open chapter in new window"
-              />
-            </button>
-          </>
-        )}
-        {verse.book}
-        <button type="button" onClick={() => window.location.reload()}>
-          <span className="font-semibold text-4xl lg:text-7xl pr-6 md:pr-10 ml-2">
-            {verse.chapter}:{verse.verse.toString().padStart(2, "0")}
-          </span>
-        </button>
-      </h1>
-    </div>
+    </>
   )
 }
