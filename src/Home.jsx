@@ -2,6 +2,8 @@ import * as React from "react"
 import { API_URL, fetchCfg } from "./config"
 import ExternalSvg from "./assets/external.svg"
 
+let timerId
+
 const getTime = () => {
   const now = new Date()
   let hour = now.getHours()
@@ -57,13 +59,14 @@ export default function App() {
   const update = () => {
     const { hour, minute, seconds } = getTime()
 
-    if (minute === currentMinute) {
+    if (timerId && minute === currentMinute) {
       return
     }
 
     // Check just after the next minute arrives
     const nextCheckDelay = 60001 - seconds * 1000
-    window.setTimeout(update, nextCheckDelay)
+    window.clearTimeout(timerId)
+    timerId = window.setTimeout(update, nextCheckDelay)
 
     if (minute === 0) {
       setTimeWithoutVerse()
