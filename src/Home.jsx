@@ -114,15 +114,15 @@ export default function App() {
 
   const fontSize = React.useMemo(() => {
     if (verseLength > 300) {
-      return "lg:text-lg"
+      return "md:text-2xl"
     }
     if (verseLength > 250) {
-      return "text-lg lg:text-2xl"
+      return "text-lg md:text-3xl"
     }
     if (verseLength > 200) {
-      return "text-xl lg:text-3xl"
+      return "text-xl md:text-4xl"
     }
-    return "text-3xl lg:text-5xl"
+    return "text-3xl md:text-5xl"
   }, [verseLength])
 
   if (!verses.length) return null
@@ -148,17 +148,19 @@ export default function App() {
         ))}
       </div>
       <h1 className="text-2xl lg:text-4xl font-thin text-right">
-        <button
-          type="button"
-          onClick={openBibleHub}
-          className="mr-4 mb-2 align-middle"
-        >
-          <img
-            src={ExternalSvg}
-            className="w-8"
-            alt="Open chapter in new window"
-          />
-        </button>
+        {verse.scripture && (
+          <button
+            type="button"
+            onClick={openBibleHub}
+            className="mr-4 mb-2 align-middle"
+          >
+            <img
+              src={ExternalSvg}
+              className="w-8"
+              alt="Open chapter in new window"
+            />
+          </button>
+        )}
         {verse.book}
         <button type="button" onClick={() => window.location.reload()}>
           <span className="font-semibold text-4xl lg:text-7xl pr-6 md:pr-10 ml-2">
