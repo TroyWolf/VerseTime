@@ -112,15 +112,24 @@ export default function App() {
     [verses]
   )
 
+  const fontSize = React.useMemo(() => {
+    if (verseLength > 300) {
+      return "lg:text-lg"
+    }
+    if (verseLength > 250) {
+      return "text-lg lg:text-2xl"
+    }
+    if (verseLength > 200) {
+      return "text-xl lg:text-3xl"
+    }
+    return "text-3xl lg:text-5xl"
+  }, [verseLength])
+
   if (!verses.length) return null
 
   return (
     <>
-      <div
-        className={`${
-          verseLength > 200 ? "text-xl lg:text-3xl" : "text-3xl lg:text-5xl"
-        } font-extralight text-left pb-4 lg:pb-10`}
-      >
+      <div className={`${fontSize} font-extralight text-left pb-4 lg:pb-10`}>
         {verses.map((v) => (
           <span key={v.verse}>
             {verses.length > 1 && (
