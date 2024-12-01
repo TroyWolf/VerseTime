@@ -1,6 +1,8 @@
 import * as React from "react"
 import { API_URL, fetchCfg } from "./config"
-import ExternalSvg from "./assets/external.svg"
+import externalSvg from "./assets/external.svg"
+import cameraSvg from "./assets/camera.svg"
+import html2canvas from "html2canvas"
 
 let timerId
 
@@ -18,6 +20,26 @@ const getTime = () => {
 export default function App() {
   const [verses, setVerses] = React.useState([])
   const [currentMinute, setCurrentMinute] = React.useState()
+
+  const captureScreenshot = () => {
+    const screenshotTarget = document.getElementById("screenshot-target")
+    const imageEls = screenshotTarget.getElementsByTagName("img")
+    for (const el of imageEls) {
+      el.style.display = "none"
+    }
+    html2canvas(screenshotTarget).then((canvas) => {
+      const base64image = canvas.toDataURL("image/png")
+
+      // Create a link element and trigger a download
+      const link = document.createElement("a")
+      link.href = base64image
+      link.download = `${verse.book}-${verse.chapter}-${verse.verse}.png`
+      link.click()
+      for (const el of imageEls) {
+        el.style.display = "block"
+      }
+    })
+  }
 
   const fetchVerseFull = async ({ chapter, verse }) => {
     setCurrentMinute(verse)
@@ -131,7 +153,7 @@ export default function App() {
   if (!verses.length) return null
 
   return (
-    <>
+    <div id="screenshot-target" className="p-8">
       <div className={`${fontSize} font-extralight text-left pb-4 lg:pb-10`}>
         {verses.map((v) => (
           <span key={v.verse}>
@@ -152,17 +174,30 @@ export default function App() {
       </div>
       <h1 className="text-2xl lg:text-4xl font-thin text-right">
         {verse.scripture && (
-          <button
-            type="button"
-            onClick={openBibleHub}
-            className="mr-4 mb-2 align-middle"
-          >
-            <img
-              src={ExternalSvg}
-              className="w-8"
-              alt="Open chapter in new window"
-            />
-          </button>
+          <>
+            <button
+              type="button"
+              onClick={captureScreenshot}
+              className="mr-4 mb-2 align-middle"
+            >
+              <img
+                src={cameraSvg}
+                className="w-8"
+                alt="Open chapter in new window"
+              />
+            </button>
+            <button
+              type="button"
+              onClick={openBibleHub}
+              className="mr-4 mb-2 align-middle"
+            >
+              <img
+                src={externalSvg}
+                className="w-8"
+                alt="Open chapter in new window"
+              />
+            </button>
+          </>
         )}
         {verse.book}
         <button type="button" onClick={() => window.location.reload()}>
@@ -171,6 +206,6 @@ export default function App() {
           </span>
         </button>
       </h1>
-    </>
+    </div>
   )
 }
