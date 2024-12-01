@@ -34,16 +34,20 @@ const getTimeVerseFull = async ({ chapter, verse }) => {
   rows.push(item)
 
   // If verse does not start with capital letter, grab the preceeding verse, too
-  const firstLetterCode = item.scripture.slice(0, 1).charCodeAt()
-  if (firstLetterCode > 96 && firstLetterCode < 123) {
+  let prevNum = verseNum
+  let firstLetterCode = item.scripture.slice(0, 1).charCodeAt()
+  while (firstLetterCode > 96 && firstLetterCode < 123) {
+    prevNum -= 1
     const prevItem = await getVerse({
       book: item.book,
       chapter,
-      verse: verseNum - 1,
+      verse: prevNum,
     })
-    if (prevItem.scripture) {
-      rows.unshift(prevItem)
+    if (!prevItem.scripture) {
+      break
     }
+    rows.unshift(prevItem)
+    firstLetterCode = prevItem.scripture.slice(0, 1).charCodeAt()
   }
 
   // If the verse does not complete a sentence, keep grabbing next verse until complete.
