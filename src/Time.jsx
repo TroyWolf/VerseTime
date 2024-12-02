@@ -1,10 +1,26 @@
 import * as React from "react"
-import { API_URL, fetchCfg } from "./config"
-import externalSvg from "./assets/external.svg"
-import cameraSvg from "./assets/camera.svg"
 import html2canvas from "html2canvas"
+import { API_URL, fetchCfg } from "./config"
+import descriptions from "./assets/book-descriptions"
+import SVG from "./SVG"
 
 let timerId
+
+const getRandomDescription = () =>
+  descriptions[Math.floor(Math.random() * descriptions.length)]
+
+const bookDescription = () => {
+  const [book, description] = getRandomDescription()
+  return (
+    <>
+      <div className="pb-2 font-medium">{book}</div>
+      <div className="pb-6 italic text-lg font-extralight">
+        a short description
+      </div>
+      <div className="font-light">{description}</div>
+    </>
+  )
+}
 
 const getTime = () => {
   const now = new Date()
@@ -23,12 +39,6 @@ export default function App() {
 
   const captureScreenshot = () => {
     const screenshotTarget = document.getElementById("screenshot-target")
-    /*
-    const imageEls = screenshotTarget.getElementsByTagName("img")
-    for (const el of imageEls) {
-      el.style.display = "none"
-    }
-    */
     html2canvas(screenshotTarget).then((canvas) => {
       const base64image = canvas.toDataURL("image/png")
 
@@ -37,11 +47,6 @@ export default function App() {
       link.href = base64image
       link.download = `${verse.book}-${verse.chapter}-${verse.verse}.png`
       link.click()
-      /*
-      for (const el of imageEls) {
-        el.style.display = "block"
-      }
-      */
     })
   }
 
@@ -53,7 +58,6 @@ export default function App() {
       })
       if (res.status > 200) {
         setTimeWithoutVerse()
-        console.log("TROY")
         return
       }
       const data = await res.json()
@@ -77,7 +81,7 @@ export default function App() {
         book: "",
         chapter: hour,
         verse: `${minute}`,
-        scripture: "",
+        scripture: minute === 0 ? bookDescription() : "",
       },
     ])
   }
@@ -165,18 +169,14 @@ export default function App() {
             onClick={captureScreenshot}
             className="mr-4 mb-2 align-middle"
           >
-            <img src={cameraSvg} className="w-8" alt="Create a screenshot" />
+            <SVG name="camera" />
           </button>
           <button
             type="button"
             onClick={openBibleHub}
             className="mr-4 mb-2 align-middle"
           >
-            <img
-              src={externalSvg}
-              className="w-8"
-              alt="Open chapter in new window"
-            />
+            <SVG name="external" />
           </button>
         </div>
       )}
