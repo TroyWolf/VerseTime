@@ -81,7 +81,7 @@ export default function App() {
         book: "",
         chapter: hour,
         verse: `${minute}`,
-        scripture: minute === 0 ? bookDescription() : "",
+        scripture: bookDescription(),
       },
     ])
   }
