@@ -4,7 +4,7 @@ import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
 import logger from 'morgan'
-import rateLimit from 'express-rate-limit'
+// import rateLimit from 'express-rate-limit'
 import routes from './routes.js'
 import dotenv from 'dotenv'
 
@@ -51,10 +51,12 @@ app.use(
 
 app.use(cors())
 
+/* Need to figure how to use this behind proxy
 const limiter = rateLimit({
   windowMs: 5 * 60 * 1000, // 5 minutes
   max: 100, // limit each IP to 100 requests per windowMs
 })
+*/
 
 //  apply to all requests
 app.use(limiter)
