@@ -152,19 +152,19 @@ const descriptions = [
     "God has been faithful to Israel, but they continue to live disconnected from him—so God sends Malachi to call them out."
   ],
   [
-    "The Gospel of Matthew",
+    "Matthew",
     "This is an account of Jesus’ life, death, and resurrection, focusing on Jesus’ role as the true king of the Jews."
   ],
   [
-    "The Gospel of Mark",
+    "Mark",
     "This brief account of Jesus’ earthly ministry highlights Jesus’ authority and servanthood."
   ],
   [
-    "The Gospel of Luke",
+    "Luke",
     "Luke writes the most thorough account of Jesus’ life, pulling together eyewitness testimonies to tell the full story of Jesus."
   ],
   [
-    "The Gospel of John",
+    "John",
     "John lists stories of signs and miracles with the hope that readers will believe in Jesus."
   ],
   [

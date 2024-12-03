@@ -9,8 +9,7 @@ let timerId
 const getRandomDescription = () =>
   descriptions[Math.floor(Math.random() * descriptions.length)]
 
-const bookDescription = () => {
-  const [book, description] = getRandomDescription()
+const bookDescription = (book, description) => {
   return (
     <>
       <div className="pb-2 font-medium">{book}</div>
@@ -76,12 +75,14 @@ export default function App() {
   // TODO: Maybe some C.S. Lewis or Oswald Chambers quotes?
   const setTimeWithoutVerse = () => {
     const { hour, minute } = getTime()
+    const [book, description] = getRandomDescription()
     setVerses([
       {
-        book: "",
+        noVerse: true,
+        book,
         chapter: hour,
         verse: `${minute}`,
-        scripture: bookDescription(),
+        scripture: bookDescription(book, description),
       },
     ])
   }
@@ -131,7 +132,7 @@ export default function App() {
 
     const url = `https://biblehub.com/bsb/${book
       .toLowerCase()
-      .replace(" ", "_")}/${verse.chapter}.htm`
+      .replace(" ", "_")}/${verse.noVerse ? 1 : verse.chapter}.htm`
     window.open(url, "_blank")
   }
 
@@ -189,7 +190,7 @@ export default function App() {
                 <sup className="px-2 first:pr-2">{v.verse}</sup>
               )}
               <span
-                className={`${
+                className={` leading-snug ${
                   verses.length > 1 && v.verse !== currentMinute
                     ? "font-thin"
                     : ""
@@ -201,7 +202,7 @@ export default function App() {
           ))}
         </div>
         <div className="text-2xl lg:text-4xl font-thin text-right">
-          {verse.book}
+          {!verse.noVerse && verse.book}
           <button type="button" onClick={() => window.location.reload()}>
             <span className="font-semibold text-4xl lg:text-7xl pr-6 md:pr-10 ml-2">
               {verse.chapter}:{verse.verse.toString().padStart(2, "0")}
