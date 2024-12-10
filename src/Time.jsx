@@ -148,15 +148,15 @@ export default function App() {
 
   const fontSize = React.useMemo(() => {
     if (verseLength > 300) {
-      return "md:text-2xl"
+      return "md:text-xl"
     }
     if (verseLength > 250) {
-      return "text-lg md:text-3xl"
+      return "text-lg md:text-2xl"
     }
     if (verseLength > 200) {
-      return "text-xl md:text-4xl"
+      return "text-xl md:text-3xl"
     }
-    return "text-3xl md:text-5xl"
+    return "text-3xl md:text-4xl"
   }, [verseLength])
 
   if (!verses.length) return null
@@ -201,10 +201,10 @@ export default function App() {
             </span>
           ))}
         </div>
-        <div className="text-2xl lg:text-4xl font-thin text-right">
+        <div className="text-3xl md:text-5xl lg:text-7xl font-thin text-right">
           {!verse.noVerse && verse.book}
           <button type="button" onClick={() => window.location.reload()}>
-            <span className="font-semibold text-4xl lg:text-7xl pr-6 md:pr-10 ml-2">
+            <span className="font-semibold text-5xl md:text-6xl lg:text-9xl pr-6 md:pr-10 ml-2">
               {verse.chapter}:{verse.verse.toString().padStart(2, "0")}
             </span>
           </button>
