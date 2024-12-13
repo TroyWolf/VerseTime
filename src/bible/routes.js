@@ -5,7 +5,7 @@ export default (app) => {
     const { book, chapter, verse } = req.params
     const data = await bibleSvc.getVerse({ book, chapter, verse })
     if (data.code) {
-      res.statusCode(data.code)
+      res.status(data.code)
     }
     res.json(data)
   })
@@ -14,7 +14,7 @@ export default (app) => {
     const { book, chapter, verse } = req.params
     const data = await bibleSvc.getChapter({ book, chapter, verse })
     if (data.code) {
-      res.statusCode(data.code)
+      res.status(data.code)
     }
     res.json(data)
   })
@@ -23,7 +23,7 @@ export default (app) => {
     const { book, chapter, verse } = req.params
     const data = await bibleSvc.getTimeVerse({ book, chapter, verse })
     if (data.code) {
-      res.statusCode(data.code)
+      res.status(data.code)
     }
     res.json(data)
   })
