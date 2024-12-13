@@ -1,25 +1,12 @@
 import * as React from "react"
-import html2canvas from "html2canvas"
+// import { useParams } from "react-router"
 import { API_URL, fetchCfg } from "./config"
-import descriptions from "./assets/book-descriptions"
-import SVG from "./SVG"
+import VerseCard from "./VerseCard"
+import VerseReferenceCard from "./VerseReferenceCard"
+import VerseButtons from "./VerseButtons"
+import BookDescription from "./BookDescription"
 
 let timerId
-
-const getRandomDescription = () =>
-  descriptions[Math.floor(Math.random() * descriptions.length)]
-
-const bookDescription = (book, description) => {
-  return (
-    <>
-      <div className="pb-2 font-medium">{book}</div>
-      <div className="pb-6 italic text-lg font-extralight">
-        a short description
-      </div>
-      <div className="font-light">{description}</div>
-    </>
-  )
-}
 
 const getTime = () => {
   const now = new Date()
@@ -32,22 +19,11 @@ const getTime = () => {
   return { hour, minute, seconds }
 }
 
-export default function App() {
+export default function Time() {
   const [verses, setVerses] = React.useState([])
   const [currentMinute, setCurrentMinute] = React.useState()
 
-  const captureScreenshot = () => {
-    const screenshotTarget = document.getElementById("screenshot-target")
-    html2canvas(screenshotTarget).then((canvas) => {
-      const base64image = canvas.toDataURL("image/png")
-
-      // Create a link element and trigger a download
-      const link = document.createElement("a")
-      link.href = base64image
-      link.download = `${verse.book}-${verse.chapter}-${verse.verse}.png`
-      link.click()
-    })
-  }
+  // const params = useParams()
 
   const fetchVerseFull = async ({ chapter, verse }) => {
     setCurrentMinute(verse)
@@ -75,20 +51,23 @@ export default function App() {
   // TODO: Maybe some C.S. Lewis or Oswald Chambers quotes?
   const setTimeWithoutVerse = () => {
     const { hour, minute } = getTime()
-    const [book, description] = getRandomDescription()
     setVerses([
       {
         noVerse: true,
-        book,
         chapter: hour,
         verse: `${minute}`,
-        scripture: bookDescription(book, description),
+        scripture: <BookDescription />
       },
     ])
   }
 
   const update = () => {
     const { hour, minute, seconds } = getTime()
+    /*
+    const hour = 7
+    const minute = 0
+    const seconds = 1
+    */
 
     if (timerId && minute === currentMinute) {
       return
@@ -122,93 +101,19 @@ export default function App() {
       document.removeEventListener("visibilitychange", handleVisibilityChange)
   })
 
-  const openBibleHub = () => {
-    if (!verse.chapter) {
-      return
-    }
-
-    // Translate book name for BibleHub
-    const book = verse.book.includes("Song") ? "songs" : verse.book
-
-    const url = `https://biblehub.com/bsb/${book
-      .toLowerCase()
-      .replace(" ", "_")}/${verse.noVerse ? 1 : verse.chapter}.htm`
-    window.open(url, "_blank")
-  }
-
   const verse = React.useMemo(
     () => verses?.find((v) => v.verse === currentMinute) || verses[0],
     [currentMinute, verses]
   )
 
-  const verseLength = React.useMemo(
-    () => verses.reduce((acc, v) => acc + v.scripture.length, 0),
-    [verses]
-  )
-
-  const fontSize = React.useMemo(() => {
-    if (verseLength > 300) {
-      return "md:text-xl"
-    }
-    if (verseLength > 250) {
-      return "text-lg md:text-2xl"
-    }
-    if (verseLength > 200) {
-      return "text-xl md:text-3xl"
-    }
-    return "text-3xl md:text-4xl"
-  }, [verseLength])
-
   if (!verses.length) return null
 
   return (
     <>
-      {verse.scripture && (
-        <div className="text-left">
-          <button
-            type="button"
-            onClick={captureScreenshot}
-            className="mr-4 mb-2 align-middle"
-          >
-            <SVG name="camera" />
-          </button>
-          <button
-            type="button"
-            onClick={openBibleHub}
-            className="mr-4 mb-2 align-middle"
-          >
-            <SVG name="external" />
-          </button>
-        </div>
-      )}
-
+      <VerseButtons verse={verse} />
       <div id="screenshot-target" className="p-4 md:p-8">
-        <div className={`${fontSize} font-extralight text-left pb-4 lg:pb-10`}>
-          {verses.map((v) => (
-            <span key={v.verse}>
-              {verses.length > 1 && (
-                <sup className="px-2 first:pr-2">{v.verse}</sup>
-              )}
-              <span
-                className={` leading-snug ${
-                  verses.length > 1 && v.verse !== currentMinute
-                    ? "font-thin"
-                    : ""
-                }`}
-              >
-                {v.scripture}
-              </span>
-            </span>
-          ))}
-        </div>
-        <div className="text-3xl md:text-5xl lg:text-7xl font-thin text-right">
-          {!verse.noVerse && verse.book}
-          <button type="button" onClick={() => window.location.reload()}>
-            <span className="font-semibold text-5xl md:text-6xl lg:text-9xl pr-6 md:pr-10 ml-2">
-              {verse.chapter}:{verse.verse.toString().padStart(2, "0")}
-            </span>
-          </button>
-        </div>
+        <VerseCard verses={verses} verseNum={verse.verse} />
+        <VerseReferenceCard verse={verse} />
       </div>
     </>
   )
