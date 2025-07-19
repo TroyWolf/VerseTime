@@ -31,7 +31,7 @@ export default function Buttons({ verse }) {
   }
 
   return verse.scripture ? (
-    <div className="text-left">
+    <div className="text-left flex">
       <button
         type="button"
         onClick={captureScreenshot}
@@ -46,6 +46,9 @@ export default function Buttons({ verse }) {
       >
         <SVG name="external" />
       </button>
+      <a className="mr-4 mb-2 align-middle" href="mailto:troy@versetime.net">
+        <SVG name="email" />
+      </a>
     </div>
   ) : null
 }
