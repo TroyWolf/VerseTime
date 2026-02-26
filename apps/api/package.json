@@ -1,0 +1,14 @@
+{
+  "name": "@versetime/api",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "dev": "tsc --watch",
+    "lint": "eslint src/"
+  },
+  "devDependencies": {
+    "@versetime/typescript-config": "workspace:*",
+    "typescript": "^5"
+  }
+}
