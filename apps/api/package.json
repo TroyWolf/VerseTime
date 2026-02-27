@@ -5,7 +5,7 @@
   "description": "A Bible API",
   "author": "troy@troywolf.com",
   "private": true,
-  "license": "UNLICENSED",
+  "license": "MIT",
   "main": "dist/index.js",
   "scripts": {
     "start": "node dist/index.js",
