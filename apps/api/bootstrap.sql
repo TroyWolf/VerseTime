@@ -1,8 +1,6 @@
-CREATE DATABASE bible;
+-- Database 'bible' is created by POSTGRES_DB env var in docker-compose
 CREATE ROLE api LOGIN PASSWORD 'devpass';
 GRANT ALL ON DATABASE bible TO api;
-
-\connect bible
 
 CREATE TABLE bsb (
   id SERIAL PRIMARY KEY,

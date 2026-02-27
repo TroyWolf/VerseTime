@@ -1,30 +1,4 @@
-version: "3.7"
-
 services:
-  versetime-api:
-    container_name: versetime-api
-    image: node:20-alpine
-    ports:
-      - "3000:3000"
-    working_dir: /app
-    volumes:
-      - .:/app:cached
-    command: sh -c "npm install; npm run start:dev"
-    environment:
-      - NODE_ENV=development
-
-  versetime-caddy:
-    container_name: versetime-caddy
-    image: caddy/caddy:2.2.1-alpine
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-     - $PWD/Caddyfile:/etc/caddy/Caddyfile
-     - $PWD/ca-certificates:/data/caddy/pki/authorities/local
-     - caddy_data:/data
-     - caddy_config:/config
-
   versetime-db:
     container_name: versetime-db
     image: postgres
@@ -36,9 +10,13 @@ services:
       - "5432:5432"
     volumes:
       - $PWD/bootstrap.sql:/docker-entrypoint-initdb.d/dump.sql
-      - pg_data:/var/lib/postgresql/data/
+      # - pg_data:/var/lib/postgresql/data/
+      - $PWD/bsb-insert.sql:/bible-data/bsb-insert.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U root -d bible"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
 volumes:
-  caddy_data:
-  caddy_config:
   pg_data:
