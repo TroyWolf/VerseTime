@@ -18,7 +18,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 const app = express()
 
-app.enable('trust proxy')
+app.set('trust proxy', 1)
 
 const server = http.createServer({}, app)
 
