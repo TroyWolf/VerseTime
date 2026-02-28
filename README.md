@@ -2,6 +2,9 @@
 
 A web app that displays a Bible verse matching the current time of day — 3:16 PM shows a verse from chapter 3, verse 16.
 
+Check it out at https://VerseTime.net
+
+
 ## Architecture
 
 - **apps/web** — React 18, React Router 7, Vite 6, Tailwind CSS 4
