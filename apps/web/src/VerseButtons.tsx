@@ -11,7 +11,8 @@ export default function Buttons({ verse }: Props) {
   const captureScreenshot = () => {
     const screenshotTarget = document.getElementById("screenshot-target")
     if (!screenshotTarget) return
-    html2canvas(screenshotTarget).then((canvas) => {
+    const bgColor = getComputedStyle(document.documentElement).backgroundColor
+    html2canvas(screenshotTarget, { backgroundColor: bgColor }).then((canvas) => {
       const base64image = canvas.toDataURL("image/png")
       const link = document.createElement("a")
       link.href = base64image
