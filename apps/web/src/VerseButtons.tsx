@@ -1,4 +1,5 @@
 import html2canvas from "html2canvas"
+import { Link } from "react-router"
 import SVG from "./SVG"
 import { VerseEntry } from "./types"
 
@@ -48,6 +49,9 @@ export default function Buttons({ verse }: Props) {
       <a className="mr-4 mb-2 align-middle" href="mailto:troy@versetime.net">
         <SVG name="email" />
       </a>
+      <Link className="mr-4 mb-2 align-middle" to="/about" title="How Versetime works">
+        <SVG name="info" />
+      </Link>
     </div>
   ) : null
 }
