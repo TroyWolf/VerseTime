@@ -1,5 +1,5 @@
 import { doQuery } from '../database.js'
-import { Verse, ErrorResponse } from '../types.js'
+import { Verse, ErrorResponse, CoverageEntry } from '../types.js'
 
 const getVerse = async ({
   book,
@@ -91,9 +91,16 @@ const getTimeVerseFull = async ({
   return rows
 }
 
+const getCoverage = async (): Promise<CoverageEntry[] | ErrorResponse> => {
+  const result = await doQuery('bible.coverage')
+  if (!result) return { code: 500 }
+  return result.rows as CoverageEntry[]
+}
+
 export default {
   getVerse,
   getChapter,
   getTimeVerse,
   getTimeVerseFull,
+  getCoverage,
 }

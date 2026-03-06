@@ -39,4 +39,12 @@ export default (app: Router) => {
     }
     res.json(data)
   })
+
+  app.get('/coverage', async (_req, res) => {
+    const data = await bibleSvc.getCoverage()
+    if ('code' in data) {
+      res.status((data as { code: number }).code)
+    }
+    res.json(data)
+  })
 }
