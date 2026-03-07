@@ -4,6 +4,8 @@ A web app that displays a Bible verse matching the current time of day — 3:16 
 
 Check it out at https://VerseTime.net
 
+It's not a perfect idea, and here's why: https://VerseTime.net/coverage
+
 
 ## Architecture
 
