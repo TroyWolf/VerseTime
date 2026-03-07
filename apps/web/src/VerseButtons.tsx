@@ -39,6 +39,7 @@ export default function Buttons({ verse }: Props) {
         type="button"
         onClick={captureScreenshot}
         className="mr-4 mb-2 align-middle"
+        title="Download a screenshot of this verse"
       >
         <SVG name="camera" />
       </button>
@@ -46,10 +47,15 @@ export default function Buttons({ verse }: Props) {
         type="button"
         onClick={openBibleHub}
         className="mr-4 mb-2 align-middle"
+        title="Open in BibleHub"
       >
         <SVG name="external" />
       </button>
-      <a className="mr-4 mb-2 align-middle" href="mailto:troy@versetime.net">
+      <a
+        className="mr-4 mb-2 align-middle"
+        href="mailto:troy@versetime.net"
+        title="Email Troy about VerseTime"
+      >
         <SVG name="email" />
       </a>
       <Link
