@@ -1,103 +1,108 @@
-import * as React from "react"
-import { Link } from "react-router"
-import { API_URL, fetchCfg } from "./config"
+import * as React from "react";
+import { Link } from "react-router";
+import { API_URL, fetchCfg } from "./config";
 
 interface CoverageEntry {
-  chapter: number
-  verse: number
-  match_count: number
-  matching_books: string | null
+  chapter: number;
+  verse: number;
+  match_count: number;
+  matching_books: string | null;
 }
 
-type CoverageMap = Map<string, CoverageEntry>
+type CoverageMap = Map<string, CoverageEntry>;
 
-const key = (chapter: number, verse: number) => `${chapter}:${verse}`
-const fmt = (h: number, m: number) => `${h}:${String(m).padStart(2, "0")}`
+const key = (chapter: number, verse: number) => `${chapter}:${verse}`;
+const fmt = (h: number, m: number) => `${h}:${String(m).padStart(2, "0")}`;
 
 export default function About() {
-  const [coverageMap, setCoverageMap] = React.useState<CoverageMap | null>(null)
-  const [selected, setSelected] = React.useState<{ chapter: number; verse: number } | null>(null)
+  const [coverageMap, setCoverageMap] = React.useState<CoverageMap | null>(
+    null,
+  );
+  const [selected, setSelected] = React.useState<{
+    chapter: number;
+    verse: number;
+  } | null>(null);
 
   React.useEffect(() => {
     fetch(`${API_URL}/coverage`, fetchCfg())
       .then((res) => res.json())
       .then((data: CoverageEntry[]) => {
-        const map: CoverageMap = new Map()
+        const map: CoverageMap = new Map();
         for (const entry of data) {
           map.set(key(entry.chapter, entry.verse), {
             ...entry,
             match_count: Number(entry.match_count),
-          })
+          });
         }
-        setCoverageMap(map)
-      })
-  }, [])
+        setCoverageMap(map);
+      });
+  }, []);
 
   const zeroMatches = React.useMemo(() => {
-    const result: Array<{ chapter: number; verse: number }> = []
+    const result: Array<{ chapter: number; verse: number }> = [];
     for (let h = 1; h <= 12; h++) {
-      result.push({ chapter: h, verse: 0 })
+      result.push({ chapter: h, verse: 0 });
     }
-    if (!coverageMap) return result
+    if (!coverageMap) return result;
     for (let h = 1; h <= 12; h++) {
       for (let m = 1; m <= 59; m++) {
         if (!coverageMap.has(key(h, m))) {
-          result.push({ chapter: h, verse: m })
+          result.push({ chapter: h, verse: m });
         }
       }
     }
-    return result.sort((a, b) => a.chapter - b.chapter || a.verse - b.verse)
-  }, [coverageMap])
+    return result.sort((a, b) => a.chapter - b.chapter || a.verse - b.verse);
+  }, [coverageMap]);
 
   const singleMatches = React.useMemo(() => {
-    if (!coverageMap) return []
-    const result: CoverageEntry[] = []
+    if (!coverageMap) return [];
+    const result: CoverageEntry[] = [];
     for (const entry of coverageMap.values()) {
-      if (entry.match_count === 1) result.push(entry)
+      if (entry.match_count === 1) result.push(entry);
     }
-    return result.sort((a, b) => a.chapter - b.chapter || a.verse - b.verse)
-  }, [coverageMap])
+    return result.sort((a, b) => a.chapter - b.chapter || a.verse - b.verse);
+  }, [coverageMap]);
 
   const twoMatches = React.useMemo(() => {
-    if (!coverageMap) return []
-    const result: CoverageEntry[] = []
+    if (!coverageMap) return [];
+    const result: CoverageEntry[] = [];
     for (const entry of coverageMap.values()) {
-      if (entry.match_count === 2) result.push(entry)
+      if (entry.match_count === 2) result.push(entry);
     }
-    return result.sort((a, b) => a.chapter - b.chapter || a.verse - b.verse)
-  }, [coverageMap])
+    return result.sort((a, b) => a.chapter - b.chapter || a.verse - b.verse);
+  }, [coverageMap]);
 
   const threeMatches = React.useMemo(() => {
-    if (!coverageMap) return []
-    const result: CoverageEntry[] = []
+    if (!coverageMap) return [];
+    const result: CoverageEntry[] = [];
     for (const entry of coverageMap.values()) {
-      if (entry.match_count === 3) result.push(entry)
+      if (entry.match_count === 3) result.push(entry);
     }
-    return result.sort((a, b) => a.chapter - b.chapter || a.verse - b.verse)
-  }, [coverageMap])
+    return result.sort((a, b) => a.chapter - b.chapter || a.verse - b.verse);
+  }, [coverageMap]);
 
   const cellColor = (chapter: number, verse: number): string => {
-    if (verse === 0) return "bg-rose-900/80"
-    if (!coverageMap) return "bg-white/5"
-    const entry = coverageMap.get(key(chapter, verse))
-    if (!entry) return "bg-rose-900/80"
-    if (entry.match_count === 1) return "bg-amber-600/70"
-    if (entry.match_count === 2) return "bg-blue-500/80"
-    if (entry.match_count === 3) return "bg-violet-600/60"
-    return "bg-white/15"
-  }
+    if (verse === 0) return "bg-rose-900/80";
+    if (!coverageMap) return "bg-white/5";
+    const entry = coverageMap.get(key(chapter, verse));
+    if (!entry) return "bg-rose-900/80";
+    if (entry.match_count === 1) return "bg-amber-600/70";
+    if (entry.match_count === 2) return "bg-blue-500/80";
+    if (entry.match_count === 3) return "bg-violet-600/60";
+    return "bg-white/15";
+  };
 
   const cellTitle = (chapter: number, verse: number): string => {
-    if (verse === 0) return `${fmt(chapter, verse)} — no verse 0 exists`
-    if (!coverageMap) return ""
-    const entry = coverageMap.get(key(chapter, verse))
-    if (!entry) return `${fmt(chapter, verse)} — 0 matches`
+    if (verse === 0) return `${fmt(chapter, verse)} — no verse 0 exists`;
+    if (!coverageMap) return "";
+    const entry = coverageMap.get(key(chapter, verse));
+    if (!entry) return `${fmt(chapter, verse)} — 0 matches`;
     if (entry.match_count <= 3 && entry.matching_books)
-      return `${fmt(chapter, verse)} — ${entry.match_count} match${entry.match_count === 1 ? "" : "es"} (${entry.matching_books})`
-    return `${fmt(chapter, verse)} — ${entry.match_count} matches`
-  }
+      return `${fmt(chapter, verse)} — ${entry.match_count} match${entry.match_count === 1 ? "" : "es"} (${entry.matching_books})`;
+    return `${fmt(chapter, verse)} — ${entry.match_count} matches`;
+  };
 
-  const zeroMatchesHighMinute = zeroMatches.filter((e) => e.verse > 0)
+  const zeroMatchesHighMinute = zeroMatches.filter((e) => e.verse > 0);
 
   return (
     <div className="text-left max-w-3xl mx-auto px-4 py-8">
@@ -108,7 +113,40 @@ export default function About() {
         ← back
       </Link>
 
-      <h1 className="text-3xl font-extralight mb-3">How Versetime Works</h1>
+      <h1 className="text-3xl font-extralight mb-3">What is Versetime</h1>
+      <p className="text-white/60 font-extralight mb-10 leading-relaxed">
+        Versetime is a "Bible clock" that shows a different verse every minute,
+        based on the current time. It’s a fun way to discover new verses and see
+        familiar ones in a new light. Versetime is free to use, with no ads or
+        tracking.
+      </p>
+
+      <p className="text-white/60 font-extralight mb-10 leading-relaxed">
+        Troy Wolf (troy@versetime.net) created Versetime after seeing a
+        vaporware ad on Instagram for "Bible Clock"--a product that didn't exist
+        but looked cool. He liked the idea and decided to build a simple web app
+        to prove the concept. He has this running on an old Fire tablet in his
+        kitchen. His family and guests love it.
+      </p>
+
+      <p className="text-white/60 font-extralight mb-10 leading-relaxed">
+        Although the{" "}
+        <a
+          href="https://bibleclock.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Bible Clock website
+        </a>{" "}
+        indicates they have a real product and have delivered some to customers,
+        I suspect the whole thing is a scam. If you are a real customer who
+        actually received one of their clocks, please email me—I’d love to hear
+        from you!
+      </p>
+
+      <h1 className="text-3xl font-extralight mb-3">
+        How Versetime Works and why it's not a perfect idea
+      </h1>
       <p className="text-white/60 font-extralight mb-10 leading-relaxed">
         Versetime maps the current time to a Bible verse by treating the hour as
         a chapter number and the minute as a verse number. At 3:16, for example,
@@ -124,20 +162,20 @@ export default function About() {
       </p>
       <div className="flex flex-wrap gap-4 text-xs text-white/50 mb-4 font-extralight">
         <span className="flex items-center gap-1.5">
-          <span className="inline-block w-3 h-3 rounded-sm bg-rose-900/80" />
-          0 matches
+          <span className="inline-block w-3 h-3 rounded-sm bg-rose-900/80" />0
+          matches
         </span>
         <span className="flex items-center gap-1.5">
-          <span className="inline-block w-3 h-3 rounded-sm bg-amber-600/70" />
-          1 match
+          <span className="inline-block w-3 h-3 rounded-sm bg-amber-600/70" />1
+          match
         </span>
         <span className="flex items-center gap-1.5">
-          <span className="inline-block w-3 h-3 rounded-sm bg-blue-500/80" />
-          2 matches
+          <span className="inline-block w-3 h-3 rounded-sm bg-blue-500/80" />2
+          matches
         </span>
         <span className="flex items-center gap-1.5">
-          <span className="inline-block w-3 h-3 rounded-sm bg-violet-600/60" />
-          3 matches
+          <span className="inline-block w-3 h-3 rounded-sm bg-violet-600/60" />3
+          matches
         </span>
         <span className="flex items-center gap-1.5">
           <span className="inline-block w-3 h-3 rounded-sm bg-white/15" />
@@ -173,7 +211,7 @@ export default function About() {
                       setSelected((prev) =>
                         prev?.chapter === h + 1 && prev?.verse === m
                           ? null
-                          : { chapter: h + 1, verse: m }
+                          : { chapter: h + 1, verse: m },
                       )
                     }
                     className={`flex-1 h-5 rounded-xs cursor-pointer ${cellColor(h + 1, m)} ${
@@ -208,7 +246,7 @@ export default function About() {
       </h2>
       <p className="text-white/60 font-extralight mb-5 leading-relaxed">
         These time slots have no matching verse in the Bible. Versetime shows a
-        book description instead.
+        very short book description instead.
       </p>
 
       <h3 className="text-white/50 text-sm font-extralight mb-1">
@@ -262,7 +300,9 @@ export default function About() {
               key={key(chapter, verse)}
               className="border-b border-white/5 hover:bg-white/5"
             >
-              <td className="py-1.5 text-amber-500/80">{fmt(chapter, verse)}</td>
+              <td className="py-1.5 text-amber-500/80">
+                {fmt(chapter, verse)}
+              </td>
               <td className="py-1.5 text-white/60">{matching_books}</td>
             </tr>
           ))}
@@ -302,8 +342,8 @@ export default function About() {
         Times with exactly three verses ({threeMatches.length})
       </h2>
       <p className="text-white/60 font-extralight mb-5 leading-relaxed">
-        These time slots match exactly three books. Versetime picks one at random
-        each time.
+        These time slots match exactly three books. Versetime picks one at
+        random each time.
       </p>
       <table className="w-full text-sm font-extralight">
         <thead>
@@ -318,12 +358,14 @@ export default function About() {
               key={key(chapter, verse)}
               className="border-b border-white/5 hover:bg-white/5"
             >
-              <td className="py-1.5 text-emerald-500/80">{fmt(chapter, verse)}</td>
+              <td className="py-1.5 text-emerald-500/80">
+                {fmt(chapter, verse)}
+              </td>
               <td className="py-1.5 text-white/60">{matching_books}</td>
             </tr>
           ))}
         </tbody>
       </table>
     </div>
-  )
+  );
 }
