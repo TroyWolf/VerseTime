@@ -28,7 +28,7 @@ export default function VerseCard({ verses = [], verseNum }: Props) {
   if (!verses.length) return null
 
   return (
-    <div id="screenshot-target" className="p-4 md:p-8">
+    <div>
       <div className={`${fontSize} font-extralight text-left pb-4 lg:pb-10`}>
         {verses.map((v) => (
           <span key={v.verse as React.Key}>

@@ -100,7 +100,7 @@ export default function Time() {
   return (
     <>
       <VerseButtons verse={verse} />
-      <div id="screenshot-target" className="p-4 md:p-8">
+      <div id="screenshot-target" className="p-4 pb-8 md:p-8 md:pb-16">
         <VerseCard verses={verses} verseNum={verse.verse} />
         <VerseReferenceCard verse={verse} />
       </div>
