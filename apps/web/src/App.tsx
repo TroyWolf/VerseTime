@@ -3,6 +3,7 @@ import "./App.css"
 import Time from './Time'
 import Verse from './Verse'
 import About from './About'
+import Coverage from './Coverage'
 
 export default function App() {
   return (
@@ -13,6 +14,7 @@ export default function App() {
           <Route path="/random/:chapter/:verse" element={<Time />} />
           <Route path="/verse/:book/:chapter/:verse" element={<Verse />} />
           <Route path="/about" element={<About />} />
+          <Route path="/coverage" element={<Coverage />} />
         </Routes>
       </BrowserRouter>
     </>
