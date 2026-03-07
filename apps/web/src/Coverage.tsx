@@ -83,13 +83,13 @@ export default function Coverage() {
 
   const cellColor = (chapter: number, verse: number): string => {
     if (verse === 0) return "bg-rose-900/80";
-    if (!coverageMap) return "bg-white/5";
+    if (!coverageMap) return "bg-black/5 dark:bg-white/5";
     const entry = coverageMap.get(key(chapter, verse));
     if (!entry) return "bg-rose-900/80";
     if (entry.match_count === 1) return "bg-amber-600/70";
     if (entry.match_count === 2) return "bg-blue-500/80";
     if (entry.match_count === 3) return "bg-violet-600/60";
-    return "bg-white/15";
+    return "bg-black/15 dark:bg-white/15";
   };
 
   const cellTitle = (chapter: number, verse: number): string => {
@@ -108,17 +108,17 @@ export default function Coverage() {
     <div className="text-left max-w-3xl mx-auto px-4 py-8">
       <Link
         to="/about"
-        className="text-white/40 hover:text-white/70 text-sm mb-8 inline-block"
+        className="text-black/40 dark:text-white/40 hover:text-black/70 dark:hover:text-white/70 text-sm mb-8 inline-block"
       >
         ← back
       </Link>
 
       <h1 className="text-3xl font-extralight mb-2">Coverage map</h1>
-      <p className="text-white/50 text-sm font-extralight mb-3">
+      <p className="text-black/50 dark:text-white/50 text-sm font-extralight mb-3">
         Rows are hours (1–12), columns are minutes (:00–:59). Tap or click any
         cell to see details.
       </p>
-      <div className="flex flex-wrap gap-4 text-xs text-white/50 mb-4 font-extralight">
+      <div className="flex flex-wrap gap-4 text-xs text-black/50 dark:text-white/50 mb-4 font-extralight">
         <span className="flex items-center gap-1.5">
           <span className="inline-block w-3 h-3 rounded-sm bg-rose-900/80" />0
           matches
@@ -136,7 +136,7 @@ export default function Coverage() {
           matches
         </span>
         <span className="flex items-center gap-1.5">
-          <span className="inline-block w-3 h-3 rounded-sm bg-white/15" />
+          <span className="inline-block w-3 h-3 rounded-sm bg-black/15 dark:bg-white/15" />
           4+ matches
         </span>
       </div>
@@ -147,7 +147,7 @@ export default function Coverage() {
             {Array.from({ length: 60 }, (_, m) => (
               <div key={m} className="flex-1 text-center">
                 {m % 15 === 0 && (
-                  <span className="text-[9px] text-white/25 leading-none">
+                  <span className="text-[9px] text-black/25 dark:text-white/25 leading-none">
                     :{String(m).padStart(2, "0")}
                   </span>
                 )}
@@ -157,7 +157,7 @@ export default function Coverage() {
           {/* Hour rows */}
           {Array.from({ length: 12 }, (_, h) => (
             <div key={h + 1} className="flex items-center mb-0.5">
-              <span className="w-6 shrink-0 text-right text-white/30 text-[10px] pr-1.5 font-extralight">
+              <span className="w-6 shrink-0 text-right text-black/30 dark:text-white/30 text-[10px] pr-1.5 font-extralight">
                 {h + 1}
               </span>
               <div className="flex flex-1 gap-px">
@@ -174,7 +174,7 @@ export default function Coverage() {
                     }
                     className={`flex-1 h-5 rounded-xs cursor-pointer ${cellColor(h + 1, m)} ${
                       selected?.chapter === h + 1 && selected?.verse === m
-                        ? "ring-1 ring-white/70 ring-inset"
+                        ? "ring-1 ring-black/50 dark:ring-white/70 ring-inset"
                         : "hover:brightness-125"
                     }`}
                     title={cellTitle(h + 1, m)}
@@ -188,11 +188,11 @@ export default function Coverage() {
       </div>
       <div className="mt-3 mb-12 min-h-10">
         {selected ? (
-          <div className="px-3 py-2.5 rounded bg-white/5 text-sm font-extralight text-white/70">
+          <div className="px-3 py-2.5 rounded bg-black/5 dark:bg-white/5 text-sm font-extralight text-black/70 dark:text-white/70">
             {cellTitle(selected.chapter, selected.verse)}
           </div>
         ) : (
-          <div className="px-3 py-2.5 text-sm font-extralight text-white/20">
+          <div className="px-3 py-2.5 text-sm font-extralight text-black/20 dark:text-white/20">
             Tap a cell to see details
           </div>
         )}
@@ -202,25 +202,25 @@ export default function Coverage() {
       <h2 className="text-xl font-extralight mb-3">
         Times with no verse ({zeroMatches.length})
       </h2>
-      <p className="text-white/60 font-extralight mb-5 leading-relaxed">
+      <p className="text-black/60 dark:text-white/60 font-extralight mb-5 leading-relaxed">
         These time slots have no matching verse in the Bible. Versetime shows a
         very short book description instead.
       </p>
 
-      <h3 className="text-white/50 text-sm font-extralight mb-1">
+      <h3 className="text-black/50 dark:text-white/50 text-sm font-extralight mb-1">
         Top of every hour — 12 times
       </h3>
-      <p className="text-white/40 text-sm font-extralight mb-6 leading-relaxed">
+      <p className="text-black/40 dark:text-white/40 text-sm font-extralight mb-6 leading-relaxed">
         Bible verses are numbered starting at 1. Verse 0 does not exist, so all
         twelve top-of-the-hour times (1:00 through 12:00) have zero matches.
       </p>
 
       {zeroMatchesHighMinute.length > 0 && (
         <>
-          <h3 className="text-white/50 text-sm font-extralight mb-1">
+          <h3 className="text-black/50 dark:text-white/50 text-sm font-extralight mb-1">
             High-minute dead zones — {zeroMatchesHighMinute.length} times
           </h3>
-          <p className="text-white/40 text-sm font-extralight mb-3 leading-relaxed">
+          <p className="text-black/40 dark:text-white/40 text-sm font-extralight mb-3 leading-relaxed">
             Some chapters in the Bible are short. When no book has a verse at
             that minute, the time slot is empty.
           </p>
@@ -228,7 +228,7 @@ export default function Coverage() {
             {zeroMatchesHighMinute.map(({ chapter, verse }) => (
               <span
                 key={key(chapter, verse)}
-                className="text-xs font-extralight text-white/50 bg-rose-900/40 rounded px-2 py-1"
+                className="text-xs font-extralight text-black/50 dark:text-white/50 bg-rose-900/40 rounded px-2 py-1"
               >
                 {fmt(chapter, verse)}
               </span>
@@ -241,13 +241,13 @@ export default function Coverage() {
       <h2 className="text-xl font-extralight mb-3">
         Times with only one verse ({singleMatches.length})
       </h2>
-      <p className="text-white/60 font-extralight mb-5 leading-relaxed">
+      <p className="text-black/60 dark:text-white/60 font-extralight mb-5 leading-relaxed">
         These time slots have exactly one matching verse in the entire Bible. At
         these times, Versetime always shows the same book.
       </p>
       <table className="w-full text-sm font-extralight mb-12">
         <thead>
-          <tr className="text-white/30 border-b border-white/10">
+          <tr className="text-black/30 dark:text-white/30 border-b border-black/10 dark:border-white/10">
             <th className="text-left pb-2 font-extralight">Time</th>
             <th className="text-left pb-2 font-extralight">Only match</th>
           </tr>
@@ -256,12 +256,12 @@ export default function Coverage() {
           {singleMatches.map(({ chapter, verse, matching_books }) => (
             <tr
               key={key(chapter, verse)}
-              className="border-b border-white/5 hover:bg-white/5"
+              className="border-b border-black/5 dark:border-white/5 hover:bg-black/5 dark:hover:bg-white/5"
             >
               <td className="py-1.5 text-amber-500/80">
                 {fmt(chapter, verse)}
               </td>
-              <td className="py-1.5 text-white/60">{matching_books}</td>
+              <td className="py-1.5 text-black/60 dark:text-white/60">{matching_books}</td>
             </tr>
           ))}
         </tbody>
@@ -271,13 +271,13 @@ export default function Coverage() {
       <h2 className="text-xl font-extralight mb-3">
         Times with exactly two verses ({twoMatches.length})
       </h2>
-      <p className="text-white/60 font-extralight mb-5 leading-relaxed">
+      <p className="text-black/60 dark:text-white/60 font-extralight mb-5 leading-relaxed">
         These time slots match exactly two books. Versetime picks one at random
         each time.
       </p>
       <table className="w-full text-sm font-extralight mb-12">
         <thead>
-          <tr className="text-white/30 border-b border-white/10">
+          <tr className="text-black/30 dark:text-white/30 border-b border-black/10 dark:border-white/10">
             <th className="text-left pb-2 font-extralight">Time</th>
             <th className="text-left pb-2 font-extralight">Matches</th>
           </tr>
@@ -286,10 +286,10 @@ export default function Coverage() {
           {twoMatches.map(({ chapter, verse, matching_books }) => (
             <tr
               key={key(chapter, verse)}
-              className="border-b border-white/5 hover:bg-white/5"
+              className="border-b border-black/5 dark:border-white/5 hover:bg-black/5 dark:hover:bg-white/5"
             >
               <td className="py-1.5 text-blue-400/80">{fmt(chapter, verse)}</td>
-              <td className="py-1.5 text-white/60">{matching_books}</td>
+              <td className="py-1.5 text-black/60 dark:text-white/60">{matching_books}</td>
             </tr>
           ))}
         </tbody>
@@ -299,13 +299,13 @@ export default function Coverage() {
       <h2 className="text-xl font-extralight mb-3">
         Times with exactly three verses ({threeMatches.length})
       </h2>
-      <p className="text-white/60 font-extralight mb-5 leading-relaxed">
+      <p className="text-black/60 dark:text-white/60 font-extralight mb-5 leading-relaxed">
         These time slots match exactly three books. Versetime picks one at
         random each time.
       </p>
       <table className="w-full text-sm font-extralight">
         <thead>
-          <tr className="text-white/30 border-b border-white/10">
+          <tr className="text-black/30 dark:text-white/30 border-b border-black/10 dark:border-white/10">
             <th className="text-left pb-2 font-extralight">Time</th>
             <th className="text-left pb-2 font-extralight">Matches</th>
           </tr>
@@ -314,12 +314,12 @@ export default function Coverage() {
           {threeMatches.map(({ chapter, verse, matching_books }) => (
             <tr
               key={key(chapter, verse)}
-              className="border-b border-white/5 hover:bg-white/5"
+              className="border-b border-black/5 dark:border-white/5 hover:bg-black/5 dark:hover:bg-white/5"
             >
               <td className="py-1.5 text-emerald-500/80">
                 {fmt(chapter, verse)}
               </td>
-              <td className="py-1.5 text-white/60">{matching_books}</td>
+              <td className="py-1.5 text-black/60 dark:text-white/60">{matching_books}</td>
             </tr>
           ))}
         </tbody>
