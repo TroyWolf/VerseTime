@@ -11,20 +11,20 @@ export default function About() {
         ← back
       </Link>
       <h1 className="text-3xl font-extralight mb-3">What is Versetime</h1>
-      <p className="text-black/60 dark:text-white/60 font-extralight mb-10 leading-relaxed">
+      <p className="text-black/80 dark:text-white/60 font-extralight mb-10 leading-relaxed">
         Versetime is a &ldquo;Bible clock&rdquo; that shows a different verse
         every minute, based on the current time. It&apos;s a fun way to discover
         new verses and see familiar ones in a new light. Versetime is free to
         use, with no ads or tracking.
       </p>
-      <p className="text-black/60 dark:text-white/60 font-extralight mb-10 leading-relaxed">
+      <p className="text-black/80 dark:text-white/60 font-extralight mb-10 leading-relaxed">
         Troy Wolf (troy@versetime.net) created Versetime after seeing a
         vaporware ad on Instagram for &ldquo;Bible Clock&rdquo;--a product that
         didn&apos;t exist but looked cool. He liked the idea and decided to
         build a simple web app to prove the concept. He has this running on an
         old Fire tablet in his kitchen. His family and guests love it.
       </p>
-      <p className="text-black/60 dark:text-white/60 font-extralight mb-10 leading-relaxed">
+      <p className="text-black/80 dark:text-white/60 font-extralight mb-10 leading-relaxed">
         An aside: If you ordered and actually recevied a{" "}
         <a
           href="https://bibleclock.com/"
@@ -37,7 +37,7 @@ export default function About() {
         delivered a real product, and if so, how well does it work.
       </p>
       <h1 className="text-3xl font-extralight mb-3">How Versetime works</h1>
-      <p className="text-black/60 dark:text-white/60 font-extralight mb-10 leading-relaxed">
+      <p className="text-black/80 dark:text-white/60 font-extralight mb-10 leading-relaxed">
         Versetime maps the current time to a Bible verse by treating the hour as
         a chapter number and the minute as a verse number. At 3:16, for example,
         it searches for any book with a Chapter 3, Verse 16 — and may find John
@@ -47,31 +47,31 @@ export default function About() {
       <h1 id="not-a-perfect-idea" className="text-3xl font-extralight mb-3">
         It's not a perfect idea!
       </h1>
-      <p className="text-black/60 dark:text-white/60 font-extralight mb-6 leading-relaxed">
+      <p className="text-black/80 dark:text-white/60 font-extralight mb-6 leading-relaxed">
         If the clock used 24 hour time instead of AM/PM, the problems below
         would be a lot worse.
       </p>
       <ul className="list-disc list-outside ml-6 mb-6">
-        <li className="text-black/60 dark:text-white/60 font-extralight mb-2 leading-relaxed">
+        <li className="text-black/80 dark:text-white/60 font-extralight mb-2 leading-relaxed">
           37 time slots have no corresponding verse at all
         </li>
-        <li className="text-black/60 dark:text-white/60 font-extralight mb-2 leading-relaxed">
+        <li className="text-black/80 dark:text-white/60 font-extralight mb-2 leading-relaxed">
           40 time slots have only 1 corresponding verse, so you see the same one
           twice a day
         </li>
-        <li className="text-black/60 dark:text-white/60 font-extralight mb-2 leading-relaxed">
+        <li className="text-black/80 dark:text-white/60 font-extralight mb-2 leading-relaxed">
           45 time slots have only 2 corresponding verses
         </li>
-        <li className="text-black/60 dark:text-white/60 font-extralight mb-2 leading-relaxed">
+        <li className="text-black/80 dark:text-white/60 font-extralight mb-2 leading-relaxed">
           47 time slots have only 3 corresponding verses
         </li>
-        <li className="text-black/60 dark:text-white/60 font-extralight mb-2 leading-relaxed">
+        <li className="text-black/80 dark:text-white/60 font-extralight mb-2 leading-relaxed">
           Without context, many verses are sentence fragments that carry little
           meaning on their own
         </li>
       </ul>
 
-      <p className="text-black/60 dark:text-white/60 font-extralight mb-6 leading-relaxed">
+      <p className="text-black/80 dark:text-white/60 font-extralight mb-6 leading-relaxed">
         For example, 1 Chronicles 2:14
         <div className="p-4 italic">"Nethanel fourth, Raddai fifth,"</div>
         That is not very meaningful on its own. VerseTime has logic that looks
@@ -85,7 +85,7 @@ export default function About() {
         of names!
       </p>
 
-      <p className="text-black/60 dark:text-white/60 font-extralight mb-10 leading-relaxed">
+      <p className="text-black/80 dark:text-white/60 font-extralight mb-10 leading-relaxed">
         More details in our coverage map.
         <div>
           <Link
@@ -96,7 +96,7 @@ export default function About() {
           </Link>
         </div>
       </p>
-      <p className="flex items-center gap-2 text-black/60 dark:text-white/60 font-extralight mb-10 leading-relaxed">
+      <p className="flex items-center gap-2 text-black/80 dark:text-white/60 font-extralight mb-10 leading-relaxed">
         <SVG name="github" />
         <span>
           Versetime is open source. You can{" "}

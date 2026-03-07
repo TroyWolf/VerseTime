@@ -108,17 +108,17 @@ export default function Coverage() {
     <div className="text-left max-w-3xl mx-auto px-4 py-8">
       <Link
         to="/about"
-        className="text-black/40 dark:text-white/40 hover:text-black/70 dark:hover:text-white/70 text-sm mb-8 inline-block"
+        className="text-black/55 dark:text-white/40 hover:text-black/70 dark:hover:text-white/70 text-sm mb-8 inline-block"
       >
         ← back
       </Link>
 
       <h1 className="text-3xl font-extralight mb-2">Coverage map</h1>
-      <p className="text-black/50 dark:text-white/50 text-sm font-extralight mb-3">
+      <p className="text-black/65 dark:text-white/50 text-sm font-extralight mb-3">
         Rows are hours (1–12), columns are minutes (:00–:59). Tap or click any
         cell to see details.
       </p>
-      <div className="flex flex-wrap gap-4 text-xs text-black/50 dark:text-white/50 mb-4 font-extralight">
+      <div className="flex flex-wrap gap-4 text-xs text-black/65 dark:text-white/50 mb-4 font-extralight">
         <span className="flex items-center gap-1.5">
           <span className="inline-block w-3 h-3 rounded-sm bg-rose-900/80" />0
           matches
@@ -202,25 +202,25 @@ export default function Coverage() {
       <h2 className="text-xl font-extralight mb-3">
         Times with no verse ({zeroMatches.length})
       </h2>
-      <p className="text-black/60 dark:text-white/60 font-extralight mb-5 leading-relaxed">
+      <p className="text-black/80 dark:text-white/60 font-extralight mb-5 leading-relaxed">
         These time slots have no matching verse in the Bible. Versetime shows a
         very short book description instead.
       </p>
 
-      <h3 className="text-black/50 dark:text-white/50 text-sm font-extralight mb-1">
+      <h3 className="text-black/65 dark:text-white/50 text-sm font-extralight mb-1">
         Top of every hour — 12 times
       </h3>
-      <p className="text-black/40 dark:text-white/40 text-sm font-extralight mb-6 leading-relaxed">
+      <p className="text-black/55 dark:text-white/40 text-sm font-extralight mb-6 leading-relaxed">
         Bible verses are numbered starting at 1. Verse 0 does not exist, so all
         twelve top-of-the-hour times (1:00 through 12:00) have zero matches.
       </p>
 
       {zeroMatchesHighMinute.length > 0 && (
         <>
-          <h3 className="text-black/50 dark:text-white/50 text-sm font-extralight mb-1">
+          <h3 className="text-black/65 dark:text-white/50 text-sm font-extralight mb-1">
             High-minute dead zones — {zeroMatchesHighMinute.length} times
           </h3>
-          <p className="text-black/40 dark:text-white/40 text-sm font-extralight mb-3 leading-relaxed">
+          <p className="text-black/55 dark:text-white/40 text-sm font-extralight mb-3 leading-relaxed">
             Some chapters in the Bible are short. When no book has a verse at
             that minute, the time slot is empty.
           </p>
@@ -228,7 +228,7 @@ export default function Coverage() {
             {zeroMatchesHighMinute.map(({ chapter, verse }) => (
               <span
                 key={key(chapter, verse)}
-                className="text-xs font-extralight text-black/50 dark:text-white/50 bg-rose-900/40 rounded px-2 py-1"
+                className="text-xs font-extralight text-black/65 dark:text-white/50 bg-rose-900/40 rounded px-2 py-1"
               >
                 {fmt(chapter, verse)}
               </span>
@@ -241,7 +241,7 @@ export default function Coverage() {
       <h2 className="text-xl font-extralight mb-3">
         Times with only one verse ({singleMatches.length})
       </h2>
-      <p className="text-black/60 dark:text-white/60 font-extralight mb-5 leading-relaxed">
+      <p className="text-black/80 dark:text-white/60 font-extralight mb-5 leading-relaxed">
         These time slots have exactly one matching verse in the entire Bible. At
         these times, Versetime always shows the same book.
       </p>
@@ -261,7 +261,7 @@ export default function Coverage() {
               <td className="py-1.5 text-amber-500/80">
                 {fmt(chapter, verse)}
               </td>
-              <td className="py-1.5 text-black/60 dark:text-white/60">{matching_books}</td>
+              <td className="py-1.5 text-black/80 dark:text-white/60">{matching_books}</td>
             </tr>
           ))}
         </tbody>
@@ -271,7 +271,7 @@ export default function Coverage() {
       <h2 className="text-xl font-extralight mb-3">
         Times with exactly two verses ({twoMatches.length})
       </h2>
-      <p className="text-black/60 dark:text-white/60 font-extralight mb-5 leading-relaxed">
+      <p className="text-black/80 dark:text-white/60 font-extralight mb-5 leading-relaxed">
         These time slots match exactly two books. Versetime picks one at random
         each time.
       </p>
@@ -289,7 +289,7 @@ export default function Coverage() {
               className="border-b border-black/5 dark:border-white/5 hover:bg-black/5 dark:hover:bg-white/5"
             >
               <td className="py-1.5 text-blue-400/80">{fmt(chapter, verse)}</td>
-              <td className="py-1.5 text-black/60 dark:text-white/60">{matching_books}</td>
+              <td className="py-1.5 text-black/80 dark:text-white/60">{matching_books}</td>
             </tr>
           ))}
         </tbody>
@@ -299,7 +299,7 @@ export default function Coverage() {
       <h2 className="text-xl font-extralight mb-3">
         Times with exactly three verses ({threeMatches.length})
       </h2>
-      <p className="text-black/60 dark:text-white/60 font-extralight mb-5 leading-relaxed">
+      <p className="text-black/80 dark:text-white/60 font-extralight mb-5 leading-relaxed">
         These time slots match exactly three books. Versetime picks one at
         random each time.
       </p>
@@ -319,7 +319,7 @@ export default function Coverage() {
               <td className="py-1.5 text-emerald-500/80">
                 {fmt(chapter, verse)}
               </td>
-              <td className="py-1.5 text-black/60 dark:text-white/60">{matching_books}</td>
+              <td className="py-1.5 text-black/80 dark:text-white/60">{matching_books}</td>
             </tr>
           ))}
         </tbody>
