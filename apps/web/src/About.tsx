@@ -25,18 +25,16 @@ export default function About() {
         old Fire tablet in his kitchen. His family and guests love it.
       </p>
       <p className="text-white/60 font-extralight mb-10 leading-relaxed">
-        Although the{" "}
+        An aside: If you ordered and actually recevied a{" "}
         <a
           href="https://bibleclock.com/"
           target="_blank"
           rel="noopener noreferrer"
         >
-          Bible Clock website
+          Bible Clock
         </a>{" "}
-        indicates they have a real product and have delivered some to customers,
-        I suspect the whole thing is a scam. If you are a real customer who
-        actually received one of their clocks, please email me—I&apos;d love to
-        hear from you!
+        I'd love to hear from you. I have been curious to know if they ever
+        delivered a real product, and if so, how well does it work.
       </p>
       <h1 className="text-3xl font-extralight mb-3">How Versetime works</h1>
       <p className="text-white/60 font-extralight mb-10 leading-relaxed">
