@@ -10,7 +10,7 @@
   "scripts": {
     "start": "node dist/index.js",
     "dev": "tsx watch src/index.ts",
-    "build": "tsc"
+    "build": "tsc && cp -r src/bible/sql dist/bible/sql"
   },
   "dependencies": {
     "cookie-parser": "^1.4.7",
