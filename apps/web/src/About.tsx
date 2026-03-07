@@ -1,4 +1,5 @@
 import { Link } from "react-router";
+import SVG from "./SVG";
 
 export default function About() {
   return (
@@ -96,6 +97,17 @@ export default function About() {
             View coverage map →
           </Link>
         </div>
+      </p>
+      <p className="flex items-center gap-2 text-white/60 font-extralight mb-10 leading-relaxed">
+        <SVG name="github" />
+        Versetime is open source. You can{" "}
+        <a
+          href="https://github.com/TroyWolf/VerseTime"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          view the code on GitHub.
+        </a>
       </p>
     </div>
   );
