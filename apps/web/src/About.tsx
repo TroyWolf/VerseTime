@@ -46,7 +46,7 @@ export default function About() {
         3:16, Genesis 3:16, and others. Each minute it picks one at random.
       </p>
 
-      <h1 className="text-3xl font-extralight mb-3">
+      <h1 id="not-a-perfect-idea" className="text-3xl font-extralight mb-3">
         It's not a perfect idea!
       </h1>
       <p className="text-white/60 font-extralight mb-6 leading-relaxed">
