@@ -1,18 +1,26 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  color-scheme: light;
+  color: #213547;
+  background-color: #ffffff;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+html.dark {
+  color-scheme: dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
 }
 
 a {
@@ -22,6 +30,10 @@ a {
 }
 
 a:hover {
+  color: #747bff;
+}
+
+html.dark a:hover {
   color: #535bf2;
 }
 
@@ -40,9 +52,13 @@ button.btn {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: #f9f9f9;
   cursor: pointer;
   transition: border-color 0.25s;
+}
+
+html.dark button.btn {
+  background-color: #1a1a1a;
 }
 
 button.btn:hover {
@@ -69,19 +85,4 @@ sup {
 sub {
   bottom: -0.25em;
   vertical-align: sub;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-
-  a:hover {
-    color: #747bff;
-  }
-
-  button.btn {
-    background-color: #f9f9f9;
-  }
 }
